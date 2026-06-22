@@ -84,7 +84,7 @@ Diagram aplikasi dibuat menggunakan TLDraw sesuai ketentuan tugas.
 
 ## 👤 Author
 
-Mei
+Andika Rizki Saputra
 
 ---
 

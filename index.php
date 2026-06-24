@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if(!isset($_SESSION['id_anggota'])){
+    header("Location: login.php");
+    exit;
+}
+
 include 'koneksi.php';
 
 $totalBuku = mysqli_num_rows(
@@ -55,7 +62,22 @@ body{
 <body>
 
 <div class="container py-5">
+<div class="d-flex justify-content-between align-items-center mb-4">
 
+    <div>
+        <h5 class="mb-0">
+            Selamat Datang,
+            <?= $_SESSION['nama']; ?>
+        </h5>
+    </div>
+
+    <div>
+        <a href="logout.php" class="btn btn-danger">
+            Logout
+        </a>
+    </div>
+
+</div>
     <div class="hero text-center">
 
         <h1 class="fw-bold">
@@ -99,60 +121,77 @@ body{
 
     </div>
 
-    <div class="row">
+<div class="row">
 
-        <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
 
-            <div class="card card-menu">
+        <div class="card card-menu">
 
-                <div class="card-body text-center">
+            <div class="card-body text-center">
 
-                    <h4>📖 Data Buku</h4>
+                <h4>📖 Data Buku</h4>
 
-                    <a href="buku.php"
-                       class="btn btn-primary mt-3">
-                        Buka Data Buku
-                    </a>
-
-                </div>
+                <a href="buku.php"
+                   class="btn btn-primary mt-3">
+                    Buka Data Buku
+                </a>
 
             </div>
 
         </div>
 
-        <div class="col-md-4 mb-3">
+    </div>
 
-            <div class="card card-menu">
+    <div class="col-md-3 mb-3">
 
-                <div class="card-body text-center">
+        <div class="card card-menu">
 
-                    <h4>👤 Data Anggota</h4>
+            <div class="card-body text-center">
 
-                    <a href="anggota.php"
-                       class="btn btn-success mt-3">
-                        Buka Data Anggota
-                    </a>
+                <h4>👤 Data Anggota</h4>
 
-                </div>
+                <a href="anggota.php"
+                   class="btn btn-success mt-3">
+                    Buka Data Anggota
+                </a>
 
             </div>
 
         </div>
 
-        <div class="col-md-4 mb-3">
+    </div>
 
-            <div class="card card-menu">
+    <div class="col-md-3 mb-3">
 
-                <div class="card-body text-center">
+        <div class="card card-menu">
 
-                    <h4>📋 Peminjaman</h4>
+            <div class="card-body text-center">
 
-                    <a href="peminjaman.php"
-                       class="btn btn-warning mt-3">
-                        Lihat Peminjaman
-                    </a>
+                <h4>📋 Peminjaman</h4>
 
-                </div>
+                <a href="peminjaman.php"
+                   class="btn btn-warning mt-3">
+                    Lihat Peminjaman
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-3">
+
+        <div class="card card-menu">
+
+            <div class="card-body text-center">
+
+                <h4>📚 Riwayat Saya</h4>
+
+                <a href="riwayat.php"
+                   class="btn btn-info mt-3">
+                    Lihat Riwayat
+                </a>
 
             </div>
 
@@ -161,6 +200,3 @@ body{
     </div>
 
 </div>
-
-</body>
-</html>

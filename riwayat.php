@@ -8,22 +8,21 @@ if(!isset($_SESSION['id_anggota'])){
 
 include 'koneksi.php';
 
+$id_anggota = $_SESSION['id_anggota'];
+
 $query = mysqli_query($conn,"
 SELECT
-p.id_peminjaman,
-a.nama,
-b.judul,
-p.tanggal_pinjam,
-p.tanggal_kembali,
-p.status
+    p.id_peminjaman,
+    b.judul,
+    p.tanggal_pinjam,
+    p.tanggal_kembali,
+    p.status
 FROM peminjaman p
-JOIN anggota a ON p.id_anggota = a.id_anggota
-JOIN buku b ON p.id_buku = b.id_buku
+JOIN buku b
+ON p.id_buku = b.id_buku
+WHERE p.id_anggota = '$id_anggota'
+ORDER BY p.id_peminjaman DESC
 ");
-
-$totalPinjam = mysqli_num_rows(
-    mysqli_query($conn,"SELECT * FROM peminjaman")
-);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +31,7 @@ $totalPinjam = mysqli_num_rows(
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Data Peminjaman</title>
+<title>Riwayat Peminjaman Saya</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -43,7 +42,7 @@ body{
 }
 
 .hero{
-    background:linear-gradient(135deg,#fd7e14,#ffc107);
+    background:linear-gradient(135deg,#198754,#20c997);
     color:white;
     padding:40px;
     border-radius:20px;
@@ -62,47 +61,35 @@ body{
 <body>
 
 <div class="container py-5">
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h5>
-        Selamat Datang,
-        <?= $_SESSION['nama']; ?>
-    </h5>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
-        <a href="logout.php" class="btn btn-danger">
-            Logout
-        </a>
+        <h5>
+            Selamat Datang,
+            <?= $_SESSION['nama']; ?>
+        </h5>
+
+        <div>
+            <a href="index.php" class="btn btn-secondary">
+                Dashboard
+            </a>
+
+            <a href="logout.php" class="btn btn-danger">
+                Logout
+            </a>
+        </div>
+
     </div>
-
-</div>
-    <a href="index.php" class="btn btn-outline-secondary mb-4">
-        ← Dashboard
-    </a>
 
     <div class="hero text-center">
 
         <h1 class="fw-bold">
-            📋 Data Peminjaman
+            📚 Riwayat Peminjaman Saya
         </h1>
 
         <p>
-            Data anggota yang meminjam buku
+            Menampilkan data peminjaman milik akun yang sedang login
         </p>
-
-    </div>
-
-    <div class="card card-custom mb-4">
-
-        <div class="card-body text-center">
-
-            <h5>Total Peminjaman</h5>
-
-            <h2 class="fw-bold text-warning">
-                <?= $totalPinjam ?>
-            </h2>
-
-        </div>
 
     </div>
 
@@ -110,23 +97,14 @@ body{
 
         <div class="card-body">
 
-            <h4 class="mb-4">
-                Daftar Peminjaman Buku
-            </h4>
-            <a href="tambah_peminjaman.php"
-            class="btn btn-warning mb-3">
-                + Tambah Peminjaman
-            </a>
-
             <div class="table-responsive">
 
                 <table class="table table-hover">
 
-                    <thead class="table-warning">
+                    <thead class="table-success">
 
                     <tr>
                         <th>No</th>
-                        <th>Nama Anggota</th>
                         <th>Judul Buku</th>
                         <th>Tanggal Pinjam</th>
                         <th>Tanggal Kembali</th>
@@ -147,8 +125,6 @@ body{
 
                         <td><?= $no++; ?></td>
 
-                        <td><?= $data['nama']; ?></td>
-
                         <td><?= $data['judul']; ?></td>
 
                         <td><?= $data['tanggal_pinjam']; ?></td>
@@ -157,19 +133,19 @@ body{
 
                         <td>
 
-                        <?php if($data['status']=="Dipinjam"): ?>
+                            <?php if($data['status']=="Dipinjam"): ?>
 
-                            <span class="badge bg-danger">
-                                Dipinjam
-                            </span>
+                                <span class="badge bg-danger">
+                                    Dipinjam
+                                </span>
 
-                        <?php else: ?>
+                            <?php else: ?>
 
-                            <span class="badge bg-success">
-                                Dikembalikan
-                            </span>
+                                <span class="badge bg-success">
+                                    Dikembalikan
+                                </span>
 
-                        <?php endif; ?>
+                            <?php endif; ?>
 
                         </td>
 

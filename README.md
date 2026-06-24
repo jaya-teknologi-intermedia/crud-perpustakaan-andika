@@ -4,11 +4,19 @@
 
 Sistem Perpustakaan merupakan aplikasi berbasis web yang dibuat menggunakan PHP Native dan MySQL untuk membantu pengelolaan data perpustakaan secara sederhana.
 
-Aplikasi ini memungkinkan pengguna untuk mengelola data buku, data anggota, serta data peminjaman buku melalui antarmuka yang mudah digunakan.
+Aplikasi ini memungkinkan pengguna untuk mengelola data buku, data anggota, serta data peminjaman buku dengan sistem login berbasis session sehingga setiap anggota dapat melihat riwayat peminjamannya sendiri.
 
 ---
 
 ## Fitur Aplikasi
+
+### 🔐 Autentikasi & Session
+
+* Login anggota
+* Session login
+* Logout
+* Proteksi halaman menggunakan session
+* Menampilkan nama anggota yang sedang login
 
 ### 📖 Manajemen Buku
 
@@ -30,8 +38,16 @@ Aplikasi ini memungkinkan pengguna untuk mengelola data buku, data anggota, sert
 
 * Menampilkan data peminjaman
 * Menambahkan data peminjaman
-* Menampilkan relasi anggota dan buku yang dipinjam
-* Menampilkan status peminjaman
+* Relasi anggota dan buku
+* Status peminjaman
+* ID anggota otomatis diambil dari session login
+* User tidak dapat memilih data dirinya secara manual
+
+### 📚 Riwayat Peminjaman
+
+* Menampilkan riwayat peminjaman anggota yang sedang login
+* Data ditampilkan berdasarkan session user
+* Setiap anggota hanya dapat melihat data miliknya sendiri
 
 ### 🏠 Dashboard
 
@@ -62,9 +78,17 @@ Aplikasi ini memungkinkan pengguna untuk mengelola data buku, data anggota, sert
 perpustakaan
 ```
 
-### Tabel
+### Tabel anggota
 
-#### buku
+| Field          | Tipe    |
+| -------------- | ------- |
+| id_anggota     | INT     |
+| nama           | VARCHAR |
+| alamat         | VARCHAR |
+| no_hp          | VARCHAR |
+| tanggal_daftar | DATE    |
+
+### Tabel buku
 
 | Field        | Tipe    |
 | ------------ | ------- |
@@ -75,17 +99,7 @@ perpustakaan
 | tahun_terbit | YEAR    |
 | stok         | INT     |
 
-#### anggota
-
-| Field          | Tipe    |
-| -------------- | ------- |
-| id_anggota     | INT     |
-| nama           | VARCHAR |
-| alamat         | VARCHAR |
-| no_hp          | VARCHAR |
-| tanggal_daftar | DATE    |
-
-#### peminjaman
+### Tabel peminjaman
 
 | Field           | Tipe    |
 | --------------- | ------- |
@@ -96,35 +110,61 @@ perpustakaan
 | tanggal_kembali | DATE    |
 | status          | VARCHAR |
 
+### Relasi
+
+```text
+anggota (1)
+    |
+    | id_anggota
+    |
+    v
+peminjaman
+    ^
+    |
+    | id_buku
+    |
+buku (1)
+```
+
 ---
 
 ## Cara Menjalankan Project
 
-1. Clone repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/jaya-teknologi-intermedia/crud-perpustakaan-andika.git
 ```
 
-2. Pindahkan project ke folder web server (Laragon)
+### 2. Pindahkan ke Folder Laragon
 
 ```text
 C:\laragon\www\
 ```
 
-3. Import database
+### 3. Import Database
 
 ```text
 database/perpustakaan.sql
 ```
 
-4. Jalankan Laragon
+### 4. Jalankan Laragon
 
-5. Buka browser
+Pastikan Apache dan MySQL berjalan.
+
+### 5. Buka Browser
+
+```text
+http://localhost/crud_perpustakaan
+```
+
+atau
 
 ```text
 http://localhost:8080/crud_perpustakaan
 ```
+
+sesuai konfigurasi Laragon.
 
 ---
 
@@ -133,20 +173,23 @@ http://localhost:8080/crud_perpustakaan
 ```text
 crud_perpustakaan
 │
+├── login.php
+├── logout.php
 ├── index.php
-├── buku.php
-├── anggota.php
-├── peminjaman.php
 │
+├── buku.php
 ├── tambah.php
 ├── edit.php
 ├── hapus.php
 │
+├── anggota.php
 ├── tambah_anggota.php
 ├── edit_anggota.php
 ├── hapus_anggota.php
 │
+├── peminjaman.php
 ├── tambah_peminjaman.php
+├── riwayat.php
 │
 ├── koneksi.php
 │
@@ -162,12 +205,13 @@ crud_perpustakaan
 
 ## Screenshot
 
-Tambahkan screenshot hasil aplikasi pada folder:
+Tambahkan screenshot berikut pada folder:
 
 ```text
 screenshots/
 ```
 
+* Login
 * Dashboard
 * Data Buku
 * Tambah Buku
@@ -177,9 +221,11 @@ screenshots/
 * Edit Anggota
 * Data Peminjaman
 * Tambah Peminjaman
+* Riwayat Peminjaman
+* Logout
 
 ---
 
 ## Pengembang
 
-Dibuat sebagai tugas pengembangan aplikasi CRUD Sistem Perpustakaan menggunakan PHP Native dan MySQL.
+Dibuat sebagai tugas pengembangan aplikasi Sistem Perpustakaan menggunakan PHP Native dan MySQL pada program magang / PKL di Jaya Teknologi Intermedia.

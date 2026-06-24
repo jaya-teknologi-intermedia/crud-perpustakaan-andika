@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if(!isset($_SESSION['id_anggota'])){
+    header("Location: login.php");
+    exit;
+}
+
 include 'koneksi.php';
 
 $query = mysqli_query($conn, "SELECT * FROM buku");
@@ -67,6 +74,20 @@ body{
 <body>
 
 <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h5>
+        Selamat Datang,
+        <?= $_SESSION['nama']; ?>
+    </h5>
+
+    <div>
+        <a href="logout.php" class="btn btn-danger">
+            Logout
+        </a>
+    </div>
+
+</div>
     <div class="container py-5">
 
     <a href="index.php" class="btn btn-outline-secondary mb-4">

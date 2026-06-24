@@ -26,16 +26,19 @@ CREATE TABLE IF NOT EXISTS `anggota` (
   `alamat` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) DEFAULT NULL,
   `tanggal_daftar` date DEFAULT NULL,
-  PRIMARY KEY (`id_anggota`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_anggota`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table perpustakaan.anggota: ~5 rows (approximately)
-INSERT INTO `anggota` (`id_anggota`, `nama`, `alamat`, `no_hp`, `tanggal_daftar`) VALUES
-	(1, 'Andika', 'Kupang', '081234567890', '2025-01-10'),
-	(2, 'Azijah', 'Surabaya', '081234567891', '2025-01-15'),
-	(3, 'Anita', 'Jakarta', '081234567892', '2025-02-01'),
-	(4, 'Asti', 'Bandung', '081234567893', '2025-02-10'),
-	(5, 'Umar', 'Yogyakarta', '081234567894', '2025-03-05');
+INSERT INTO `anggota` (`id_anggota`, `nama`, `alamat`, `no_hp`, `tanggal_daftar`, `username`, `password`) VALUES
+	(1, 'Andika', 'Kupang', '081234567890', '2025-01-10', 'andika', '123456'),
+	(2, 'Azijah', 'Surabaya', '081234567891', '2025-01-15', 'azijah', '123456'),
+	(3, 'Anita', 'Jakarta', '081234567892', '2025-02-01', 'anita', '123456'),
+	(4, 'Asti', 'Bandung', '081234567893', '2025-02-10', 'asti', '123456'),
+	(5, 'Umar', 'Yogyakarta', '081234567894', '2025-03-05', 'umar', '123456');
 
 -- Dumping structure for table perpustakaan.buku
 CREATE TABLE IF NOT EXISTS `buku` (
@@ -46,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `buku` (
   `tahun_terbit` year DEFAULT NULL,
   `stok` int DEFAULT NULL,
   PRIMARY KEY (`id_buku`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table perpustakaan.buku: ~10 rows (approximately)
 INSERT INTO `buku` (`id_buku`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `stok`) VALUES
@@ -74,15 +77,17 @@ CREATE TABLE IF NOT EXISTS `peminjaman` (
   KEY `id_buku` (`id_buku`),
   CONSTRAINT `peminjaman_ibfk_1` FOREIGN KEY (`id_anggota`) REFERENCES `anggota` (`id_anggota`),
   CONSTRAINT `peminjaman_ibfk_2` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table perpustakaan.peminjaman: ~5 rows (approximately)
+-- Dumping data for table perpustakaan.peminjaman: ~7 rows (approximately)
 INSERT INTO `peminjaman` (`id_peminjaman`, `id_anggota`, `id_buku`, `tanggal_pinjam`, `tanggal_kembali`, `status`) VALUES
 	(1, 1, 2, '2026-06-01', '2026-06-08', 'Dikembalikan'),
 	(2, 2, 5, '2026-06-02', '2026-06-09', 'Dikembalikan'),
 	(3, 3, 1, '2026-06-03', '2026-06-10', 'Dipinjam'),
 	(4, 4, 7, '2026-06-04', '2026-06-11', 'Dipinjam'),
-	(5, 5, 9, '2026-06-05', '2026-06-12', 'Dipinjam');
+	(5, 5, 9, '2026-06-05', '2026-06-12', 'Dipinjam'),
+	(6, 5, 1, '9497-08-19', '2536-04-21', 'Dikembalikan'),
+	(7, 4, 2, '2009-06-23', '2010-05-07', 'Dipinjam');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

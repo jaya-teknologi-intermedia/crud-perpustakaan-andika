@@ -9,5 +9,10 @@ mysqli_query($conn,
      WHERE id_buku='$id'"
 );
 
-header("Location:index.php");
+session_start();
+
+$_SESSION['success'] =
+"Data buku berhasil dihapus.";
+
+header("Location: buku.php");
 exit;

@@ -62,6 +62,26 @@ body{
 <body>
 
 <div class="container py-5">
+<?php
+if(isset($_SESSION['success'])){
+?>
+
+<div class="alert alert-success alert-dismissible fade show">
+
+    <?= $_SESSION['success']; ?>
+
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert">
+    </button>
+
+</div>
+
+<?php
+unset($_SESSION['success']);
+}
+?>
 <div class="d-flex justify-content-between align-items-center mb-4">
 
     <h5>
@@ -189,5 +209,6 @@ body{
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

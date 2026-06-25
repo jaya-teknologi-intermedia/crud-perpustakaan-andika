@@ -15,8 +15,13 @@ if(isset($_POST['simpan'])){
         ('$nama','$alamat','$no_hp','$tanggal_daftar')"
     );
 
-    header("Location: anggota.php");
-    exit;
+session_start();
+
+$_SESSION['success'] =
+"Data anggota berhasil ditambahkan.";
+
+header("Location: anggota.php");
+exit;
 }
 ?>
 

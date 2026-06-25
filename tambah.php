@@ -14,7 +14,14 @@ if(isset($_POST['simpan'])){
     VALUES
     ('$judul','$penulis','$penerbit','$tahun_terbit','$stok')");
 
-    header("Location: index.php");
+session_start();
+
+$_SESSION['success'] =
+"Data buku berhasil ditambahkan.";
+
+header("Location: buku.php");
+exit;
+
 }
 ?>
 

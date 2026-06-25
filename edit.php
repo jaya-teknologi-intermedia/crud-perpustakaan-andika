@@ -24,7 +24,14 @@ if(isset($_POST['update'])){
         WHERE id_buku='$id'
     ");
 
-    header("Location:index.php");
+session_start();
+
+$_SESSION['success'] =
+"Data buku berhasil diubah.";
+
+header("Location: buku.php");
+exit;
+
 }
 
 ?>

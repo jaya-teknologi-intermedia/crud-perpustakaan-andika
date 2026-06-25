@@ -9,25 +9,33 @@ if(isset($_POST['login'])){
 
     $query = mysqli_query($conn,
         "SELECT * FROM anggota
-         WHERE username='$username'
-         AND password='$password'"
+        WHERE username='$username'"
     );
 
     if(mysqli_num_rows($query) > 0){
 
         $data = mysqli_fetch_assoc($query);
 
-        $_SESSION['id_anggota'] = $data['id_anggota'];
-        $_SESSION['nama'] = $data['nama'];
+        if(password_verify($password, $data['password'])){
 
-        header("Location: index.php");
-        exit;
+            $_SESSION['id_anggota'] = $data['id_anggota'];
+            $_SESSION['nama'] = $data['nama'];
 
-    } else {
+            header("Location: index.php");
+            exit;
+
+        }else{
+
+            echo "<script>
+                    alert('Username atau Password Salah');
+                </script>";
+        }
+
+    }else{
 
         echo "<script>
                 alert('Username atau Password Salah');
-              </script>";
+            </script>";
     }
 }
 ?>
@@ -36,9 +44,34 @@ if(isset($_POST['login'])){
 <html>
 <head>
     <title>Login Perpustakaan</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<?php
+if(isset($_SESSION['success'])){
+?>
+
+<div class="container mt-3">
+
+    <div class="alert alert-success alert-dismissible fade show">
+
+        <?= $_SESSION['success']; ?>
+
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+</div>
+
+<?php
+unset($_SESSION['success']);
+}
+?>   
 
 <div class="container">
 
@@ -83,6 +116,18 @@ if(isset($_POST['login'])){
 
                     </form>
 
+                    <!-- Tambahan Register -->
+
+                    <div class="text-center mt-3">
+
+                        Belum punya akun?
+
+                        <a href="register.php">
+                            Daftar di sini
+                        </a>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -92,6 +137,8 @@ if(isset($_POST['login'])){
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

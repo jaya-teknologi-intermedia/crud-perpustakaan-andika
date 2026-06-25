@@ -37,8 +37,13 @@ if(isset($_POST['simpan'])){
     )
     ");
 
-    header("Location: peminjaman.php");
-    exit;
+session_start();
+
+$_SESSION['success'] =
+"Data peminjaman berhasil ditambahkan.";
+
+header("Location:peminjaman.php");
+exit;
 }
 ?>
 

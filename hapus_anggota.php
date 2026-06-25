@@ -9,5 +9,10 @@ mysqli_query($conn,
      WHERE id_anggota='$id'"
 );
 
+session_start();
+
+$_SESSION['success'] =
+"Data anggota berhasil dihapus.";
+
 header("Location: anggota.php");
 exit;

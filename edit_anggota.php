@@ -25,8 +25,13 @@ if(isset($_POST['update'])){
         WHERE id_anggota='$id'"
     );
 
-    header("Location: anggota.php");
-    exit;
+session_start();
+
+$_SESSION['success'] =
+"Data anggota berhasil diubah.";
+
+header("Location: anggota.php");
+exit;
 }
 ?>
 
